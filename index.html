@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>礦星工坊 試玩版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14161c;--panel:#1d2029;--line:#2e3340;--ink:#eef0f4;--mute:#a3a9b8;--gold:#f2b544;--cyan:#5fd3e6;--red:#e8665a;--btn:#f2b544;--btnink:#1a1408}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 "Noto Sans TC",system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+header{text-align:center;padding:24px 0 8px}
+h1{font-size:44px;font-weight:900;margin:0;letter-spacing:.08em;color:var(--gold)}
+.sub{color:var(--mute);margin:4px 0 0;font-size:16px;letter-spacing:.2em}
+.ver{display:inline-block;margin-top:12px;font-size:14px;color:var(--cyan);border:1px solid var(--cyan);border-radius:99px;padding:2px 12px}
+.lead{font-size:19px;text-align:center;margin:24px auto 8px;max-width:560px}
+h2{font-size:26px;margin:48px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.dl{display:block;text-decoration:none;color:var(--btnink);background:var(--btn);border-radius:16px;padding:22px 16px;text-align:center;font-weight:900;font-size:24px;box-shadow:0 4px 0 #a8761d}
+.dl small{display:block;font-weight:400;font-size:15px;margin-top:4px}
+.dl.other{background:var(--panel);color:var(--ink);box-shadow:0 4px 0 #0c0d11;border:1px solid var(--line)}
+.dl:active{transform:translateY(3px);box-shadow:0 1px 0 #a8761d}
+.mine{color:var(--gold);font-size:15px;text-align:center;margin-top:10px}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;padding:14px 0 14px 56px;border-bottom:1px dashed var(--line)}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:14px;width:40px;height:40px;border-radius:50%;background:var(--cyan);color:#0b1a1e;font-weight:900;display:grid;place-items:center;font-size:20px}
+b.k{background:#2a2f3c;border:1px solid #444b5c;border-radius:6px;padding:0 8px;font-weight:700;white-space:nowrap}
+.note{background:#2a2312;border-left:4px solid var(--gold);padding:10px 14px;border-radius:6px;margin:12px 0;font-size:16px}
+/* mock dialogs */
+.mock{margin:12px 0 4px;background:#e9e9ec;color:#1b1b1f;border-radius:12px;padding:16px;max-width:360px;font-size:15px;line-height:1.5;box-shadow:0 6px 24px #0008}
+.mock .t{font-weight:700;margin-bottom:6px}
+.mock .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.mock .b{border-radius:7px;padding:4px 14px;background:#fff;border:1px solid #c9c9cf}
+.mock .b.hl{outline:3px solid var(--red);outline-offset:2px;font-weight:700}
+.mock.win{background:#1c4fa3;color:#fff;border-radius:2px;max-width:400px}
+.mock.win .b{background:#fff0;border:1px solid #fff;color:#fff}
+.mock.win a{color:#fff;text-decoration:underline}
+.mock.win a.hl{outline:3px solid var(--gold);outline-offset:2px}
+.mock .sec{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tabs{display:flex;gap:8px;margin:8px 0 0}
+.tab{flex:1;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;padding:10px;font:inherit;font-weight:700;cursor:pointer}
+.tab[aria-selected=true]{background:var(--cyan);color:#0b1a1e;border-color:var(--cyan)}
+.pane[hidden]{display:none}
+.fb{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:12px}
+.fb .btn{display:inline-block;background:#262b37;border:1px solid var(--cyan);color:var(--cyan);border-radius:8px;padding:2px 10px;font-weight:700}
+ul.keys{padding-left:20px;margin:6px 0}
+footer{margin-top:56px;color:var(--mute);font-size:14px;text-align:center}
+@media (max-width:560px){h1{font-size:34px}.pick{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>礦星工坊</h1>
+  <p class="sub">ASTEROID WORKS</p>
+  <span class="ver">試玩版 2026-10-06</span>
+</header>
+<p class="lead">你在一顆小行星上經營採礦站：先用手挖礦、裝船賺錢，手忙不過來時，就蓋機器、拉輸送帶，把那件事交給機器做。</p>
+
+<div class="pick">
+  <a class="dl" id="dl-win" href="https://github.com/weitalu/asteroid-works-playtest/releases/latest/download/AsteroidWorks-Windows.zip">Windows 電腦<small>按這裡下載（約 80MB）</small></a>
+  <a class="dl" id="dl-mac" href="https://github.com/weitalu/asteroid-works-playtest/releases/latest/download/AsteroidWorks-Mac.zip">Mac 電腦<small>按這裡下載（約 130MB）</small></a>
+</div>
+<p class="mine" id="mine"></p>
+
+<h2>第一次打開（只要做一次）</h2>
+<p>這個試玩版是自己做的小遊戲，沒有跟 Apple／微軟付費認證，所以電腦第一次會擋一下。照下面做就好，<b>很安全</b>。</p>
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-win" aria-selected="true">Windows</button>
+  <button class="tab" role="tab" id="t-mac" aria-selected="false">Mac</button>
+</div>
+
+<section class="pane" id="p-win">
+<ol class="steps">
+  <li>下載好之後，打開<b class="k">檔案總管</b> → 左邊的<b class="k">下載</b>，找到「AsteroidWorks-Windows」壓縮檔。</li>
+  <li>在它上面按<b>滑鼠右鍵</b> → <b class="k">解壓縮全部…</b> → <b class="k">解壓縮</b>。
+    <div class="note">一定要先解壓縮！直接在壓縮檔裡面點兩下，遊戲會打不開。</div></li>
+  <li>打開解出來的資料夾，在<b>「AsteroidWorks」</b>（有遊戲圖示的那個）上點兩下。</li>
+  <li>如果跳出藍色視窗，先按<b class="k">其他資訊</b>，再按<b class="k">仍要執行</b>。
+    <div class="mock win"><div class="t">Windows 已保護您的電腦</div>Microsoft Defender SmartScreen 已防止某個無法辨識的應用程式啟動……<br><a class="hl">其他資訊</a><div class="row"><span class="b">仍要執行</span><span class="b">不要執行</span></div></div>
+    <p style="font-size:15px;color:var(--mute)">按了「其他資訊」之後，下面才會出現「仍要執行」。</p></li>
+</ol>
+</section>
+
+<section class="pane" id="p-mac" hidden>
+<ol class="steps">
+  <li>下載好之後，打開<b class="k">Finder</b> → 左邊的<b class="k">下載項目</b>。如果看到的是壓縮檔，先在它上面點兩下解開，會變成<b>「AsteroidWorks」</b>。</li>
+  <li>在「AsteroidWorks」上點兩下。會跳出這個視窗，按<b class="k">完成</b>：
+    <div class="mock"><div class="t">未打開「AsteroidWorks」</div>Apple 無法驗證「AsteroidWorks」是否包含惡意軟體……<div class="row"><span class="b">丟到垃圾桶</span><span class="b hl">完成</span></div></div></li>
+  <li>點螢幕左上角的蘋果 → <b class="k">系統設定</b> → 左邊的<b class="k">隱私權與安全性</b> → 右邊一直往下捲到底。</li>
+  <li>會看到一行說「AsteroidWorks」已被阻擋，按它旁邊的<b class="k">仍要打開</b>，然後輸入你的開機密碼。
+    <div class="mock"><div class="sec"><span>已阻擋「AsteroidWorks」以保護你的 Mac。</span><span class="b hl">仍要打開</span></div></div></li>
+  <li>再點兩下「AsteroidWorks」，跳出的視窗按<b class="k">仍要打開</b>。之後就能直接打開了。</li>
+</ol>
+<div class="note">Mac 用 Safari 下載會自動解開；用 Chrome 下載的話要自己點兩下壓縮檔。</div>
+</section>
+
+<h2>怎麼玩</h2>
+<ul class="keys">
+  <li>主選單按<b>「開始遊戲」</b>。遊戲會自動存檔，關掉再開會接著玩。</li>
+  <li><b>滑鼠左鍵</b>：點東西、放機器、拖曳拉輸送帶。<b>滑鼠右鍵</b>：看那個東西是什麼。</li>
+  <li>不知道怎麼辦也沒關係，隨便試試看——<b>你卡住的地方，就是我最想知道的地方</b>。</li>
+</ul>
+
+<h2>玩的時候，想到什麼就說</h2>
+<div class="fb">
+  <p style="margin-top:0">遊戲畫面角落一直有一個 <span class="btn">💬 寫下想法</span> 按鈕。</p>
+  <p>看不懂、卡住、覺得好玩、覺得無聊、畫面太亂——<b>想到就按，打一句話，按「送出」</b>，就會直接傳給我，不用另外截圖或傳檔案。</p>
+  <p style="margin-bottom:0;color:var(--mute);font-size:16px">遊戲也會記下你玩到哪一關、玩了多久，跟你的想法一起送來，讓我知道是在哪裡發生的。不會收集其他資料。</p>
+</div>
+
+<footer>謝謝你幫忙試玩！ · 礦星工坊 試玩版</footer>
+</main>
+<script>
+(function(){
+  var ua = navigator.userAgent || "", mac = /Mac/i.test(ua) && !/iPhone|iPad/i.test(ua), win = /Windows/i.test(ua);
+  function show(which){
+    ["win","mac"].forEach(function(k){
+      document.getElementById("p-"+k).hidden = k !== which;
+      document.getElementById("t-"+k).setAttribute("aria-selected", k === which);
+    });
+  }
+  document.getElementById("t-win").onclick = function(){ show("win"); };
+  document.getElementById("t-mac").onclick = function(){ show("mac"); };
+  if (mac || win) {
+    var me = mac ? "mac" : "win", other = mac ? "win" : "mac";
+    document.getElementById("dl-"+other).classList.add("other");
+    document.getElementById("mine").textContent = "看起來你用的是 " + (mac ? "Mac" : "Windows") + "，按亮的那個就對了。";
+    if (mac) { var p = document.querySelector(".pick"); p.insertBefore(document.getElementById("dl-mac"), p.firstChild); }
+    show(me);
+  }
+})();
+</script>
+</body>
+</html>
